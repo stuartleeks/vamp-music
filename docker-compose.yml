@@ -1,0 +1,67 @@
+version: "3"
+services:
+
+#
+# Web client
+#
+
+  web-client:
+    image: magneticio/vamp-music-web-client
+    depends_on:
+    - gateway
+    ports:
+    - "80:80"
+
+#
+# Gateway
+#
+  gateway:
+    image: magneticio/vamp-music-gateway
+    depends_on:
+    - auth
+    ports:
+    - "3000:3000"
+    environment:
+      SERVICES_AUTH_HOST: auth
+      SERVICES_PROFILE_HOST: profile
+      SERVICES_CHARTS_HOST: charts
+
+#
+# Auth
+#
+  auth:
+    image: magneticio/vamp-music-auth
+    ports:
+    - "3001"
+    links:
+    - auth-mongo
+    - auth-redis
+    environment:
+      MONGO_HOST: auth-mongo
+      REDIS_HOST: auth-redis
+  auth-mongo:
+    image: mongo:latest
+  auth-redis:
+    image: redis:latest
+
+#
+# Profile
+#
+  profile:
+    image: magneticio/vamp-music-profile
+    ports:
+    - "3002"
+    links:
+    - profile-mongo
+    environment:
+      MONGO_HOST: profile-mongo
+  profile-mongo:
+    image: mongo:latest
+
+#
+# Charts
+#
+  charts:
+    image: magneticio/vamp-music-charts
+    ports:
+    - "3003"

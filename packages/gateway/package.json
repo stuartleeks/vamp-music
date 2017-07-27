@@ -1,0 +1,27 @@
+{
+  "name": "vamp-music-gateway",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docker:build": "docker build -t magneticio/vamp-music-gateway .",
+    "docker:run": "docker run -d -P --name vamp-music-gateway magneticio/vamp-music-gateway",
+    "docker:stop": "docker stop vamp-music-gateway"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "boom": "^5.2.0",
+    "config": "^1.26.1",
+    "good": "^7.2.0",
+    "good-console": "^6.4.0",
+    "h2o2": "^5.4.0",
+    "hapi": "^16.5.0",
+    "hapi-auth-basic": "^4.2.0",
+    "hoek": "^4.2.0"
+  },
+  "devDependencies": {
+    "lerna": "^2.0.0"
+  }
+}

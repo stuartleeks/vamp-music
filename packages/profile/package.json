@@ -1,0 +1,23 @@
+{
+  "name": "vamp-music-profile",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docker:build": "docker build -t magneticio/vamp-music-profile .",
+    "docker:run": "docker run -d -P --name vamp-music-profile magneticio/vamp-music-profile",
+    "docker:stop": "docker stop vamp-music-profile"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^1.26.1",
+    "good": "^7.2.0",
+    "good-console": "^6.4.0",
+    "hapi": "^16.5.0",
+    "mongoose": "^4.11.4"
+  },
+  "devDependencies": {
+    "lerna": "^2.0.0"
+  }
+}
