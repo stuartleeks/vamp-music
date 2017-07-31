@@ -10,7 +10,7 @@ Requirements:
 -   Docker and Docker-Compose
 -   Lerna
 
-Install
+## Install
 
 ```bash
 npm install --global lerna
@@ -20,3 +20,21 @@ docker-compose up
 ```
 
 Now hit `localhost:80`
+
+## Architecture
+
+Vamp Music is a simplified but representative example of a service based architecture.
+1. Clients connect to an API gateway that authenticates and aggregates and proxies services.
+2. Each service owns their datasource(s) and exposes REST and/or RPC type calls.
+
+
+```bash
+                         ----------> Auth
+                         |
+Web-client (SPA) --> API Gateway --> Profile
+                                 --> Songs
+                                 --> Charts
+                                 --> Activity
+                                 --> etc.
+                                                                
+```

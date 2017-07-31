@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
     "docker:build": "docker build -t magneticio/vamp-music-auth .",
     "docker:run": "docker run -d -P --name vamp-music-auth magneticio/vamp-music-auth",
     "docker:stop": "docker stop vamp-music-auth"

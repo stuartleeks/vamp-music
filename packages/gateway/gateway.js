@@ -5,16 +5,10 @@ const axios = require('axios')
 const auth = config.services.auth
 const profile = config.services.profile
 const charts = config.services.charts
+const songs = config.services.songs
 
 
 const routes = [
-  {
-    method: 'GET',
-    path: '/',
-    config: {
-      handler: hello
-    }
-  },
   {
     method: 'POST',
     path: '/authenticate',
@@ -32,6 +26,20 @@ const routes = [
   },
   {
     method: 'GET',
+    path: '/songs',
+    config: {
+      handler: getSongs
+    }
+  },
+  {
+    method: 'GET',
+    path: '/songs/{trackId}',
+    config: {
+      handler: getSong
+    }
+  },
+  {
+    method: 'GET',
     path: '/charts/{countryCode}',
     config: {
       auth: false,
@@ -39,10 +47,6 @@ const routes = [
     }
   }
 ]
-
-function hello (request, reply) {
-  reply('hello').code(200)
-}
 
 function authenticate (request, reply) {
   const payload = {
@@ -61,6 +65,26 @@ function authenticate (request, reply) {
 
 function getProfile (request, reply) {
   axios.get(`http://${profile.host}:${profile.port}/${request.currentUser}`)
+    .then(res => {
+      reply(res.data)
+    })
+    .catch(err => {
+      reply(err)
+    })
+}
+
+function getSong (request, reply) {
+  axios.get(`http://${songs.host}:${songs.port}/${request.trackId}`)
+    .then(res => {
+      reply(res.data)
+    })
+    .catch(err => {
+      reply(err)
+    })
+}
+
+function getSongs (request, reply) {
+  axios.get(`http://${songs.host}:${songs.port}`)
     .then(res => {
       reply(res.data)
     })

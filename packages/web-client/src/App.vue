@@ -1,16 +1,27 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <navbar class="mb-3"></navbar>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'app'
-}
+  import bus from './services/bus'
+  import Navbar from '@/components/Navbar.vue'
+  import '../node_modules/bootstrap/dist/css/bootstrap.css'
+  export default {
+    name: 'app',
+    components: {
+      Navbar
+    },
+    created () {
+      bus.$on('errors:401', () => {
+        localStorage.removeItem('vamp_music_token')
+        this.$router.push('/')
+      })
+    }
+  }
 </script>
-
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -18,6 +29,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+button {
+  cursor: pointer;
 }
 </style>

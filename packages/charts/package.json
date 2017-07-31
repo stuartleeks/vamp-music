@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
     "docker:build": "docker build -t magneticio/vamp-music-charts .",
     "docker:run": "docker run -d -P --name vamp-music-charts magneticio/vamp-music-charts",
     "docker:stop": "docker stop vamp-music-charts"

@@ -30,6 +30,7 @@ mongoose.connection.on('connected', () => {
   console.info(`Mongoose default connection open to ${config.db.mongoHost}`)
   Profile.find({}).exec((err, collection) => {
     if (collection.length === 0) {
+      console.log('Seeding profile data')
       const mockData = JSON.parse(fs.readFileSync('data/MOCK_DATA.json', 'utf8'))
       Profile.insertMany(mockData, (err) =>{
         if (err) console.error(err)
@@ -48,7 +49,8 @@ const Profile = mongoose.model('Profile', {
   last_name: String,
   email: String,
   gender: String,
-  ip_address: String
+  ip_address: String,
+  avatar: String
 })
 
 exports.register = function (server, options, next) {
