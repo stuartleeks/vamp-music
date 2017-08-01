@@ -2,7 +2,7 @@
 
 ![dashboard](./screen1.png)
 
-Vamp Music is a set of demo services with an front end and api gateway.
+Vamp Music is a set of demo services with a front end and api gateway.
 It uses [Lerna](https://lernajs.io/) to manage all the packages in the repo and
 docker-compose to spin up a local dev environment, similar to an eventual Vamp environment.
 
