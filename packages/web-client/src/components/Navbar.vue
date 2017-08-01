@@ -4,12 +4,12 @@
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="#">Vamp Music</a>
+      <a class="navbar-brand" href="#/app">Vamp Music</a>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
         </ul>
-        <img :src="imageLink" alt="" width="30px" height="30px">
+        <img class="avatar" :src="imageLink" alt="" width="30px" height="30px">
         <span class="navbar-text mr-3">
           {{userName}}
         </span>
@@ -56,3 +56,10 @@
     }
   }
 </script>
+
+<style scoped>
+  .avatar {
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+</style>

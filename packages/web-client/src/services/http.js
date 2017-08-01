@@ -1,10 +1,12 @@
+/* global GLOBAL_CONFIG */
+
 import axios from 'axios'
 import bus from './bus'
 
 class Http {
 
   constructor () {
-    axios.defaults.baseURL = 'http://localhost:3000'
+    axios.defaults.baseURL = GLOBAL_CONFIG.env.apiHost
 
     // add auth
     axios.interceptors.request.use(config => {

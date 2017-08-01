@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const config = require('config')
 const fs = require('fs')
-
+const axios = require('axios')
 const routes = [
   {
     method: 'GET',
@@ -14,10 +14,16 @@ const routes = [
 
 function findOne (request, reply) {
   if(request.params && request.params.email) {
-    Profile.findOne({ email: request.params.email }).lean()
+    const promises = []
+    promises.push(Profile.findOne({ email: request.params.email }).lean())
+    promises.push(axios.get(`https://randomuser.me/api/?seed=${request.params.email}&inc=picture`))
+
+    Promise.all(promises)
       .then(res =>  {
-        if (!res) return reply({ message: 'no profile found' }).code(404)
-        reply(res)
+        if (!res[0]) return reply({ message: 'no profile found' }).code(404)
+        const merged = res[0]
+        merged.avatar = res[1].data.results[0].picture.thumbnail
+        reply(merged)
       })
       .catch(err => reply(err))
   } else {

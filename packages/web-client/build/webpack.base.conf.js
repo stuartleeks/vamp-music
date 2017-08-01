@@ -1,3 +1,4 @@
+var ExtendedDefinePlugin = require('extended-define-webpack-plugin')
 var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
@@ -71,5 +72,10 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new ExtendedDefinePlugin({
+      GLOBAL_CONFIG: process.env.NODE_ENV === 'production' ? config.build : config.dev
+    })
+  ]
 }

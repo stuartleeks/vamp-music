@@ -3,14 +3,14 @@
     <header>
       <div class="container">
         <div class="row">
-          <div class="col-sm-6 text-center">
+          <div class="col-sm-8">
             <div class="header-content">
               <div class="header-content-inner">
-                <h1>Vamp Music is different then all other music services!</h1>
+                <h1><span style="background-color: black">Vamp Music is different then all other music services!</span></h1>
               </div>
             </div>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="header-content">
               <div class="header-content-inner">
                 <login></login>
@@ -66,6 +66,7 @@
   a:hover,
   a:focus {
     color: #fcbd20;
+    cursor: pointer;
   }
   hr {
     max-width: 100px;
@@ -185,6 +186,8 @@
     min-height: auto;
     overflow-y: hidden;
     background: url("../../static/img/stage.jpeg"), #7b4397;
+    background-repeat: no-repeat;
+    background-size: cover;
     color: white;
   }
   header .header-content {
@@ -200,8 +203,8 @@
   header .header-content .header-content-inner h1 {
     margin-top: 0;
     margin-bottom: 30px;
-    font-size: 30px;
-    font-weight: 500;
+    font-size: 50px;
+    font-weight: 700;
   }
   header .header-content .header-content-inner .list-badges {
     margin-bottom: 25px;
@@ -222,7 +225,7 @@
       min-height: 100%;
     }
     header .header-content {
-      text-align: center;
+      text-align: left;
       padding: 0;
       height: 100vh;
     }
@@ -244,7 +247,7 @@
   }
   @media (min-width: 992px) {
     header .header-content .header-content-inner h1 {
-      font-size: 50px;
+      font-size: 80px;
     }
   }
   section {

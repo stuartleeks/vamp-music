@@ -1,5 +1,6 @@
 # Vamp Music
 
+![dashboard](./screen1.png)
 
 Vamp Music is a set of demo services with an front end and api gateway.
 It uses [Lerna](https://lernajs.io/) to manage all the packages in the repo and
@@ -28,7 +29,7 @@ Vamp Music is a simplified but representative example of a service based archite
 2. Each service owns their datasource(s) and exposes REST and/or RPC type calls.
 
 
-```bash
+```
                          ----------> Auth
                          |
 Web-client (SPA) --> API Gateway --> Profile

@@ -1,0 +1,75 @@
+---
+name: vamp-music
+gateways:
+  9050: web/http
+clusters:
+  web:
+    services:
+      name: web-client:1.0
+      deployable: magneticio/vamp-music-web-client
+      ports:
+        http: 80/http
+      dependencies:
+        gateway: gateway:1.0
+
+  gateway:
+    services:
+      name: gateway:1.0
+      deployable: magneticio/vamp-music-gateway
+      ports:
+        http: 3000/http
+      dependencies:
+        auth: auth:1.0
+      environment_variables:
+        SERVICES_AUTH_HOST: $auth.host
+        SERVICES_AUTH_HOST: $auth.ports.http
+
+  auth:
+    services:
+      name: auth:1.0
+      deployable: magneticio/vamp-music-auth
+      ports:
+        http: 3001/http
+      dependencies:
+        db: auth-mongo
+        redis: auth-redis
+      environment_variables:
+        MONGO_HOST: $db.host
+        MONGO_PORT: $db.ports.mongodb_port
+        REDIS_HOST: $redis.host
+        REDIS_PORT: $redis.ports.redis_port
+  auth-mongo:
+    services:
+      name: auth-mongo
+      deployable: mongo:latest
+      ports:
+        mongodb_port: 27017/tcp
+  auth-redis:
+    services:
+      name: auth-redis
+      deployable: redis:latest
+      ports:
+        redis_port: 6379/tcp
+
+  songs:
+    services:
+      breed:
+        name: songs
+        deployable: magneticio/vamp-music-songs
+        ports:
+          http_port: 3004/http
+        dependencies:
+          db: songs-mongo
+        environment_variables:
+          MONGO_HOST: $db.host
+          MONGO_PORT: $db.ports.mongodb_port
+      scale:
+        cpu: 1
+        memory: 1GB
+        instances: 1
+  songs-mongo:
+    services:
+      name: songs-mongo
+      deployable: mongo:latest
+      ports:
+        mongodb_port: 27017/tcp

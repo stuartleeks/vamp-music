@@ -9,6 +9,7 @@
   import bus from './services/bus'
   import Navbar from '@/components/Navbar.vue'
   import '../node_modules/bootstrap/dist/css/bootstrap.css'
+  import '../fonts/linea_music_1.0/_ICONFONT/styles.css'
   export default {
     name: 'app',
     components: {

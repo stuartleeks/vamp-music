@@ -9,7 +9,7 @@
         <div class="form-group">
           <input v-model="password" class="form-control" type="password" placeholder="password"/>
         </div>
-        <button @click.prevent="login()" class="btn btn-block btn-primary mb-4">login</button>
+        <button @click.prevent="login()" class="btn btn-block btn-primary btn-lg mb-4">login</button>
         <div class="alert alert-danger" v-if="error">
           Please provide a valid email and password
         </div>
@@ -63,6 +63,8 @@
 </script>
 <style>
   .login {
-    width: 450px;
+    width: 350px;
+    background: transparent;
+    border: none;
   }
 </style>

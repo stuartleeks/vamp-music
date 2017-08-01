@@ -2,7 +2,7 @@ const config = {}
 const db = config.db = {}
 
 config.bind = '0.0.0.0'
-config.port = process.env.PORT || 3001
+config.port = 3001
 config.tokenTimeout = 600 // seconds
 
 db.mongoHost = process.env.MONGO_HOST || 'localhost'

@@ -26,6 +26,7 @@ services:
       SERVICES_PROFILE_HOST: profile
       SERVICES_CHARTS_HOST: charts
       SERVICES_SONGS_HOST: songs
+      SERVICES_RECOMMENDED_HOST: recommended
 
 #
 # Auth
@@ -74,9 +75,13 @@ services:
     image: mongo:latest
 
 #
-# Charts
+# Recommended
 #
-  charts:
-    image: magneticio/vamp-music-charts
+  recommended:
+    image: magneticio/vamp-music-recommended
     ports:
-    - "3003"
+    - "3005"
+    depends_on:
+    - songs
+    environment:
+      SERVICES_SONGS_HOST: songs

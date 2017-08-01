@@ -2,7 +2,7 @@ const config = {}
 const db = config.db = {}
 
 config.bind = '0.0.0.0'
-config.port = process.env.PORT || 3002
+config.port = 3002
 
 // database
 db.mongoHost = process.env.MONGO_HOST || 'localhost'

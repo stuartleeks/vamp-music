@@ -14,6 +14,13 @@ const routes = [
   },
   {
     method: 'GET',
+    path: '/tags/{tag}',
+    config: {
+      handler: findbyTag
+    }
+  },
+  {
+    method: 'GET',
     path: '/{trackId}',
     config: {
       handler: findOne
@@ -22,9 +29,27 @@ const routes = [
 ]
 
 function find (request, reply) {
-  Song.find().limit(20).lean()
+  const skip = parseInt(request.query.skip) || 0
+  const limit = parseInt(request.query.limit) || 20
+  const artist = request.query.artist || ''
+
+  const match = artist ? { artist } : {}
+
+  Song.find(match).limit(limit).skip(skip).lean()
     .then(res =>  {
       if (!res) return reply({ message: 'no songs found' }).code(404)
+      reply(res)
+    })
+    .catch(err => reply(err))
+}
+
+function findbyTag(request, reply) {
+  const skip = parseInt(request.query.skip) || 0
+  const limit = parseInt(request.query.limit) || 20
+
+  Song.find({ tags:{"$elemMatch":{"$elemMatch": { "$in": [request.params.tag] }}}}).limit(limit).skip(skip).lean()
+    .then(res =>  {
+      if (!res) return reply({ message: 'no songs found with that tag' }).code(404)
       reply(res)
     })
     .catch(err => reply(err))

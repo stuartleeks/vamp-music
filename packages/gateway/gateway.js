@@ -6,6 +6,7 @@ const auth = config.services.auth
 const profile = config.services.profile
 const charts = config.services.charts
 const songs = config.services.songs
+const recommended = config.services.recommended
 
 
 const routes = [
@@ -26,24 +27,23 @@ const routes = [
   },
   {
     method: 'GET',
-    path: '/songs',
+    path: '/recommended',
     config: {
-      handler: getSongs
+      handler: getRecommended
     }
   },
   {
     method: 'GET',
-    path: '/songs/{trackId}',
+    path: '/songs/{artist}',
     config: {
-      handler: getSong
+      handler: getSongsByArtist
     }
   },
   {
     method: 'GET',
-    path: '/charts/{countryCode}',
+    path: '/songs/tags/{tag}',
     config: {
-      auth: false,
-      handler: getCharts
+      handler: getSongByTag
     }
   }
 ]
@@ -73,8 +73,8 @@ function getProfile (request, reply) {
     })
 }
 
-function getSong (request, reply) {
-  axios.get(`http://${songs.host}:${songs.port}/${request.trackId}`)
+function getSongsByArtist (request, reply) {
+  axios.get(`http://${songs.host}:${songs.port}/?artist=${request.params.artist}`)
     .then(res => {
       reply(res.data)
     })
@@ -83,8 +83,18 @@ function getSong (request, reply) {
     })
 }
 
-function getSongs (request, reply) {
-  axios.get(`http://${songs.host}:${songs.port}`)
+function getSongByTag (request, reply) {
+  axios.get(`http://${songs.host}:${songs.port}/tags/${request.params.tag}`)
+    .then(res => {
+      reply(res.data)
+    })
+    .catch(err => {
+      reply(err)
+    })
+}
+
+function getRecommended (request, reply) {
+  axios.get(`http://${recommended.host}:${recommended.port}`)
     .then(res => {
       reply(res.data)
     })

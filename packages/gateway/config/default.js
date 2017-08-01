@@ -3,7 +3,7 @@ const db = config.db = {}
 const services = config.services = {}
 
 config.bind = '0.0.0.0'
-config.port = process.env.PORT || 3000
+config.port = 3000
 
 // database
 db.mongoHost = process.env.MONGO_HOST || 'localhost'
@@ -31,4 +31,11 @@ services.songs = {
   host: process.env.SERVICES_SONGS_HOST || '127.0.0.1',
   port: process.env.SERVICES_SONGS_PORT || 3004
 }
+
+services.recommended = {
+  host: process.env.SERVICES_RECOMMENDED_HOST || '127.0.0.1',
+  port: process.env.SERVICES_RECOMMENDED_PORT || 3005
+}
+
+
 module.exports = config

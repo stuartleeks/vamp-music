@@ -20,7 +20,7 @@ internals.implementation = (server, options) => {
     authenticate: function (request, reply) {
 
       const req = request.raw.req;
-      const token = req.headers.authorization.split('Bearer ')[1]
+      const token = request.headers.authorization ? req.headers.authorization.split('Bearer ')[1] : null
       if (!token) {
         return reply(Boom.unauthorized(null, 'Token', settings.unauthorizedAttributes))
       }
