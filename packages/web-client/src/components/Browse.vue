@@ -2,11 +2,15 @@
   <div class="container content">
     <div class="row">
       <div class="col-sm-12">
+        <div class="alert alert-info" v-if="error">
+          {{error.status}}
+          {{error.statusText}}
+        </div>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-12 text-left">
-        <h3 class="header">Recommended tracks</h3>
+        <h3 class="header">Browsing {{header}}</h3>
         <table class="text-left table table-striped">
           <thead>
           <tr>
@@ -38,7 +42,6 @@
           </tbody>
         </table>
       </div>
-
     </div>
     <div class="row">
 
@@ -47,29 +50,38 @@
 </template>
 
 <script>
-export default {
-  name: 'dashboard',
-  mounted () {
-    this.fetchData()
-  },
-  computed: {
-    currentTrack () {
-      return this.$store.getters.currentTrack
+  export default {
+    name: 'browse',
+    data () {
+      return {
+        error: ''
+      }
     },
-    songs () {
-      return this.$store.getters.songs
-    }
-  },
-  methods: {
-    fetchData () {
-      this.$store.dispatch('getRecommendedSongs')
+    mounted () {
+      this.fetchData()
     },
-    togglePlay (index) {
-      this.$store.dispatch('togglePlay', index)
+    watch: {
+      '$route': 'fetchData'
     },
-    limitTags (tags) {
-      return tags.slice(0, 3)
+    computed: {
+      songs () {
+        return this.$store.getters.songs
+      },
+      header () {
+        return this.$route.query.artist || this.$route.query.tag
+      }
+    },
+    methods: {
+      togglePlay (index) {
+        this.$store.dispatch('togglePlay', index)
+      },
+      fetchData () {
+        if (this.$route.query.artist) this.$store.dispatch('getSongsByArtist', this.$route.query.artist)
+        if (this.$route.query.tag) this.$store.dispatch('getSongsByTag', this.$route.query.tag)
+      },
+      limitTags (tags) {
+        return tags.slice(0, 3)
+      }
     }
   }
-}
 </script>

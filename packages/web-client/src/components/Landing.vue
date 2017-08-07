@@ -33,7 +33,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .hero-image {
   }
   .heading-font {
@@ -65,7 +65,6 @@
   }
   a:hover,
   a:focus {
-    color: #fcbd20;
     cursor: pointer;
   }
   hr {
