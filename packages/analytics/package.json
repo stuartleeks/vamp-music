@@ -1,0 +1,24 @@
+{
+  "name": "vamp-music-analytics",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "node index.js",
+    "docker:build": "docker build -t magneticio/vamp-music-analytics .",
+    "docker:run": "docker run -d -P --name vamp-music-profile magneticio/vamp-music-analytics",
+    "docker:stop": "docker stop vamp-music-analytics"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "config": "^1.26.1",
+    "good": "^7.2.0",
+    "good-console": "^6.4.0",
+    "hapi": "^16.5.0",
+    "mongoose": "^4.11.4"
+  },
+  "devDependencies": {
+    "lerna": "^2.0.0"
+  }
+}

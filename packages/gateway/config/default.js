@@ -32,5 +32,11 @@ services.recommended = {
   port: process.env.SERVICES_RECOMMENDED_PORT || 3005
 }
 
+services.analytics = {
+  host: process.env.SERVICES_ANALYTICS_HOST || '127.0.0.1',
+  port: process.env.SERVICES_ANALYTICS_PORT || 3006
+}
+
+
 
 module.exports = config

@@ -30,6 +30,7 @@
         this.$router.push('/login')
       },
       logout () {
+        this.$store.dispatch('storeEvent', { event: 'logout', payload: {} })
         localStorage.removeItem('vamp_music_token')
         localStorage.removeItem('vamp_music_profile')
         this.$router.push('/')

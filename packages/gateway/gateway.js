@@ -4,7 +4,7 @@ const axios = require('axios')
 
 const auth = config.services.auth
 const profile = config.services.profile
-const charts = config.services.charts
+const analytics = config.services.analytics
 const songs = config.services.songs
 const recommended = config.services.recommended
 
@@ -44,6 +44,13 @@ const routes = [
     path: '/songs/tags/{tag}',
     config: {
       handler: getSongByTag
+    }
+  },
+  {
+    method: 'POST',
+    path: '/analytics',
+    config: {
+      handler: postEvents
     }
   }
 ]
@@ -97,6 +104,23 @@ function getRecommended (request, reply) {
   axios.get(`http://${recommended.host}:${recommended.port}`)
     .then(res => {
       reply(res.data)
+    })
+    .catch(err => {
+      reply(err)
+    })
+}
+
+function postEvents (request, reply) {
+  const event = {
+    event: request.payload.event,
+    payload: request.payload.payload,
+    timestamp: Date.now(),
+    user: request.currentUser
+  }
+
+  axios.post(`http://${analytics.host}:${analytics.port}/events`, event)
+    .then(res => {
+      reply().code(201)
     })
     .catch(err => {
       reply(err)

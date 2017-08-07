@@ -69,7 +69,8 @@ const actions = {
         this.error = err && err.response ? err.response : ''
       })
   },
-  togglePlay ({ commit }, trackId) {
+  togglePlay ({ dispatch, commit }, trackId) {
+    dispatch('storeEvent', { event: 'songs:play', payload: { trackId } })
     commit(types.PLAY_SONG, trackId)
   }
 }

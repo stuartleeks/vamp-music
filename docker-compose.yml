@@ -24,9 +24,9 @@ services:
     environment:
       SERVICES_AUTH_HOST: auth
       SERVICES_PROFILE_HOST: profile
-      SERVICES_CHARTS_HOST: charts
       SERVICES_SONGS_HOST: songs
       SERVICES_RECOMMENDED_HOST: recommended
+      SERVICES_ANALYTICS_HOST: analytics
 
 #
 # Auth
@@ -85,3 +85,17 @@ services:
     - songs
     environment:
       SERVICES_SONGS_HOST: songs
+#
+# Analytics
+#
+  analytics:
+    image: magneticio/vamp-music-analytics
+    ports:
+    - "3006"
+    links:
+    - analytics-mongo
+    environment:
+      MONGO_HOST: analytics-mongo
+  analytics-mongo:
+    image: mongo:latest
+

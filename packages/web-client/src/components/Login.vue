@@ -39,6 +39,7 @@
           .then(res => {
             if (res.data && res.data.token) {
               localStorage.setItem('vamp_music_token', res.data.token)
+              this.$store.dispatch('storeEvent', { event: 'login', payload: {} })
             }
             http.get('/profile')
               .then(res => {

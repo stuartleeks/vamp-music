@@ -11,7 +11,6 @@
 
 <script>
   import Playbar from './Playbar.vue'
-  import Vue from 'Vue'
   export default {
     name: 'appContainer',
     components: {
@@ -19,23 +18,7 @@
     },
     data () {
       return {
-        globalPlaying: false,
-        globalTitle: '...',
-        globalArtist: '...'
-      }
-    },
-    methods: {
-      togglePlay (index) {
-        const selectedSong = Object.assign({}, this.songs[index])
-        selectedSong.playing = this.globalPlaying = !this.songs[index].playing || false
-        this.globalTitle = this.songs[index].title
-        this.globalArtist = this.songs[index].artist
-
-        for (let song of this.songs) {
-          song.playing = false
-        }
-
-        Vue.set(this.songs, index, selectedSong)
+        error: ''
       }
     }
   }
