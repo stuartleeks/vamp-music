@@ -103,13 +103,6 @@ function getRecommended (request, reply) {
     })
 }
 
-function getCharts (request, reply) {
-  reply.proxy({
-    uri: `http://${charts.host}:${charts.port}/{countryCode}`,
-    passThrough: true
-  })
-}
-
 exports.register = function (server, options, next) {
   server.route(routes)
   next()

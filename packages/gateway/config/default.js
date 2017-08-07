@@ -22,11 +22,6 @@ services.profile = {
   port: process.env.SERVICES_PROFILE_PORT || 3002
 }
 
-services.charts = {
-  host: process.env.SERVICES_CHARTS_HOST || '127.0.0.1',
-  port: process.env.SERVICES_CHARTS_PORT || 3003
-}
-
 services.songs = {
   host: process.env.SERVICES_SONGS_HOST || '127.0.0.1',
   port: process.env.SERVICES_SONGS_PORT || 3004
