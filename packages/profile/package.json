@@ -6,7 +6,9 @@
     "start": "node index.js",
     "docker:build": "docker build -t magneticio/vamp-music-profile .",
     "docker:run": "docker run -d -P --name vamp-music-profile magneticio/vamp-music-profile",
-    "docker:stop": "docker stop vamp-music-profile"
+    "docker:stop": "docker stop vamp-music-profile",
+    "docker:push": "docker push magneticio/vamp-music-profile"
+
   },
   "author": "",
   "license": "ISC",

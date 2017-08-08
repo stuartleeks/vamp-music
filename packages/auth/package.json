@@ -7,7 +7,9 @@
     "start": "node index.js",
     "docker:build": "docker build -t magneticio/vamp-music-auth .",
     "docker:run": "docker run -d -P --name vamp-music-auth magneticio/vamp-music-auth",
-    "docker:stop": "docker stop vamp-music-auth"
+    "docker:stop": "docker stop vamp-music-auth",
+    "docker:push": "docker push magneticio/vamp-music-auth"
+
   },
   "author": "",
   "license": "ISC",

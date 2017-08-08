@@ -1,35 +1,62 @@
 ---
 name: vamp-music
 gateways:
-  9050: web/http
+  80: web/http_port
+  3000: gateway/http_port
 clusters:
   web:
     services:
-      name: web-client:1.0
-      deployable: magneticio/vamp-music-web-client
-      ports:
-        http: 80/http
-      dependencies:
-        gateway: gateway:1.0
+      breed:
+        name: web-client:1.0
+        deployable: magneticio/vamp-music-web-client
+        ports:
+          http_port: 80/http
+        dependencies:
+          gateway: gateway:1.0
+      dialect:
+        marathon:
+          docker:
+            forcePullImage: true
+      scale:
+        cpu: 0.1
+        memory: 256MB
+        instances: 1
 
   gateway:
     services:
-      name: gateway:1.0
-      deployable: magneticio/vamp-music-gateway
-      ports:
-        http: 3000/http
-      dependencies:
-        auth: auth:1.0
-      environment_variables:
-        SERVICES_AUTH_HOST: $auth.host
-        SERVICES_AUTH_HOST: $auth.ports.http
+      breed:
+        name: gateway:1.0
+        deployable: magneticio/vamp-music-gateway
+        ports:
+          http_port: 3000/http
+        dependencies:
+          auth: auth:1.0
+          profile: profile:1.0
+          songs: songs:1.0
+          recommended: recommended:1.0
+          analytics: analytics:1.0
+        environment_variables:
+          SERVICES_AUTH_HOST: $auth.host
+          SERVICES_AUTH_PORT: $auth.ports.http_port
+          SERVICES_PROFILE_HOST: $profile.host
+          SERVICES_PROFILE_PORT: $profile.ports.http_port
+          SERVICES_SONGS_HOST: $songs.host
+          SERVICES_SONGS_PORT: $songs.ports.http_port
+          SERVICES_RECOMMENDED_HOST: $recommended.host
+          SERVICES_RECOMMENDED_PORT: $recommended.ports.http_port
+          SERVICES_ANALYTICS_HOST: $analytics.host
+          SERVICES_ANALYTICS_PORT: $analytics.ports.http_port
+      scale:
+        cpu: 0.2
+        memory: 256MB
+        instances: 1
 
   auth:
     services:
       name: auth:1.0
       deployable: magneticio/vamp-music-auth
       ports:
-        http: 3001/http
+        http_port: 3001/http
       dependencies:
         db: auth-mongo
         redis: auth-redis
@@ -46,15 +73,43 @@ clusters:
         mongodb_port: 27017/tcp
   auth-redis:
     services:
-      name: auth-redis
-      deployable: redis:latest
+      breed:
+        name: auth-redis
+        deployable: redis:latest
+        ports:
+          redis_port: 6379/tcp
+      scale:
+        cpu: 0.1
+        memory: 256MB
+        instances: 1
+
+  profile:
+    services:
+      breed:
+        name: profile:1.0
+        deployable: magneticio/vamp-music-profile
+        ports:
+          http_port: 3002/http
+        dependencies:
+          db: profile-mongo
+        environment_variables:
+          MONGO_HOST: $db.host
+          MONGO_PORT: $db.ports.mongodb_port
+      scale:
+        cpu: 0.2
+        memory: 256MB
+        instances: 1
+  profile-mongo:
+    services:
+      name: profile-mongo
+      deployable: mongo:latest
       ports:
-        redis_port: 6379/tcp
+        mongodb_port: 27017/tcp
 
   songs:
     services:
       breed:
-        name: songs
+        name: songs:1.0
         deployable: magneticio/vamp-music-songs
         ports:
           http_port: 3004/http
@@ -63,9 +118,15 @@ clusters:
         environment_variables:
           MONGO_HOST: $db.host
           MONGO_PORT: $db.ports.mongodb_port
+      dialect:
+        marathon:
+          healthChecks:
+            - maxConsecutiveFailures: 0
+          docker:
+            forcePullImage: true
       scale:
-        cpu: 1
-        memory: 1GB
+        cpu: 0.4
+        memory: 512MB
         instances: 1
   songs-mongo:
     services:
@@ -73,3 +134,38 @@ clusters:
       deployable: mongo:latest
       ports:
         mongodb_port: 27017/tcp
+
+  analytics:
+    services:
+      breed:
+        name: analytics:1.0
+        deployable: magneticio/vamp-music-analytics
+        ports:
+          http_port: 3004/http
+        dependencies:
+          db: analytics-mongo
+        environment_variables:
+          MONGO_HOST: $db.host
+          MONGO_PORT: $db.ports.mongodb_port
+      scale:
+        cpu: 0.2
+        memory: 256MB
+        instances: 1
+  analytics-mongo:
+    services:
+      name: analytics-mongo
+      deployable: mongo:latest
+      ports:
+        mongodb_port: 27017/tcp
+
+  recommended:
+    services:
+      breed:
+        name: recommended:1.0
+        deployable: magneticio/vamp-music-recommended
+        ports:
+          http_port: 3005/http
+      scale:
+        cpu: 0.2
+        memory: 256MB
+        instances: 1

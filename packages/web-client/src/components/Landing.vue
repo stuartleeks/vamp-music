@@ -184,7 +184,7 @@
     width: 100%;
     min-height: auto;
     overflow-y: hidden;
-    background: url("../../static/img/stage.jpeg"), #7b4397;
+    background: url("../../static/img/stage-blue.jpg"), #005d97;
     background-repeat: no-repeat;
     background-size: cover;
     color: white;
@@ -333,7 +333,6 @@
     background-size: cover;
     -o-background-size: cover;
     background-position: center;
-    background-image: url('../../static/img/bg-cta.jpg');
     padding: 250px 0;
   }
   section.cta .cta-content {

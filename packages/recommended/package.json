@@ -6,7 +6,8 @@
     "start": "node index.js",
     "docker:build": "docker build -t magneticio/vamp-music-recommended .",
     "docker:run": "docker run -d -P --name vamp-music-recommended magneticio/vamp-music-recommended",
-    "docker:stop": "docker stop vamp-music-recommended"
+    "docker:stop": "docker stop vamp-music-recommended",
+    "docker:push": "docker push magneticio/vamp-music-recommended"
   },
   "author": "",
   "license": "ISC",

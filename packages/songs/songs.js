@@ -77,6 +77,7 @@ mongoose.connection.on('connected', () => {
         const mockData = readSongData()
         Song.insertMany(mockData, (err) =>{
           if (err) console.error(err)
+          console.info('Song insertion complete')
         })
       })
     }

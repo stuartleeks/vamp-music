@@ -1,4 +1,4 @@
 module.exports = {
   NODE_ENV: '"production"',
-  apiHost: 'http://localhost:3000'
+  apiHost: 'http://awsdemo.vamp.io:3000'
 }
