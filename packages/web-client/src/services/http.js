@@ -6,8 +6,8 @@ import bus from './bus'
 class Http {
 
   constructor () {
-    axios.defaults.baseURL = GLOBAL_CONFIG.env.apiHost
-
+    axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':3000' || GLOBAL_CONFIG.env.apiHost
+    console.log(axios.defaults.baseURL)
     // add auth
     axios.interceptors.request.use(config => {
       config.headers.Authorization = `Bearer ${this.getAccessToken()}`

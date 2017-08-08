@@ -184,7 +184,7 @@
     width: 100%;
     min-height: auto;
     overflow-y: hidden;
-    background: url("../../static/img/stage-blue.jpg"), #005d97;
+    background: url("../../static/img/stage-blue.jpg"), #006397;
     background-repeat: no-repeat;
     background-size: cover;
     color: white;
