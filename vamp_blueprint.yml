@@ -8,7 +8,7 @@ clusters:
     services:
       breed:
         name: web-client:1.0
-        deployable: magneticio/vamp-music-web-client
+        deployable: magneticio/vamp-music-web-client:1.0
         ports:
           http_port: 80/http
         dependencies:
@@ -19,7 +19,7 @@ clusters:
             forcePullImage: true
       scale:
         cpu: 0.1
-        memory: 256MB
+        memory: 128MB
         instances: 1
 
   gateway:
