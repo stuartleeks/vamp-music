@@ -1,5 +1,5 @@
 ---
-name: vamp-music-demo
+name: vamp-music-demo-1.0
 gateways:
   80: web/http_port
   3000: gateway/http_port
@@ -7,8 +7,8 @@ clusters:
   web:
     services:
       breed:
-        name: web-client:1.1
-        deployable: magneticio/vamp-music-web-client:1.1
+        name: web-client:1.0
+        deployable: magneticio/vamp-music-web-client:1.0.0
         ports:
           http_port: 80/http
         dependencies:
@@ -26,26 +26,29 @@ clusters:
     services:
       breed:
         name: gateway:1.0
-        deployable: magneticio/vamp-music-gateway
+        deployable: magneticio/vamp-music-gateway:1.0.0
         ports:
           http_port: 3000/http
         dependencies:
           auth: auth:1.0
           profile: profile:1.0
-#          songs: songs:1.0
+          songs: songs:1.0
           recommended: recommended:1.0
           analytics: analytics:1.0
+          activity: activity:1.0
         environment_variables:
           SERVICES_AUTH_HOST: $auth.host
           SERVICES_AUTH_PORT: $auth.ports.http_port
           SERVICES_PROFILE_HOST: $profile.host
           SERVICES_PROFILE_PORT: $profile.ports.http_port
-#          SERVICES_SONGS_HOST: $songs.host
-#          SERVICES_SONGS_PORT: $songs.ports.http_port
+          SERVICES_SONGS_HOST: $songs.host
+          SERVICES_SONGS_PORT: $songs.ports.http_port
           SERVICES_RECOMMENDED_HOST: $recommended.host
           SERVICES_RECOMMENDED_PORT: $recommended.ports.http_port
           SERVICES_ANALYTICS_HOST: $analytics.host
           SERVICES_ANALYTICS_PORT: $analytics.ports.http_port
+          SERVICES_ACTIVITY_HOST: $activity.host
+          SERVICES_ACTIVITY_PORT: $activity.ports.http_port
       scale:
         cpu: 0.2
         memory: 256MB
@@ -54,7 +57,7 @@ clusters:
   auth:
     services:
       name: auth:1.0
-      deployable: magneticio/vamp-music-auth
+      deployable: magneticio/vamp-music-auth:1.0.0
       ports:
         http_port: 3001/http
       dependencies:
@@ -87,7 +90,7 @@ clusters:
     services:
       breed:
         name: profile:1.0
-        deployable: magneticio/vamp-music-profile
+        deployable: magneticio/vamp-music-profile:1.0.0
         ports:
           http_port: 3002/http
         dependencies:
@@ -106,40 +109,34 @@ clusters:
       ports:
         mongodb_port: 27017/tcp
 
-#  songs:
-#    services:
-#      breed:
-#        name: songs:1.0
-#        deployable: magneticio/vamp-music-songs
-#        ports:
-#          http_port: 3004/http
-#        dependencies:
-#          db: songs-mongo
-#        environment_variables:
-#          MONGO_HOST: $db.host
-#          MONGO_PORT: $db.ports.mongodb_port
-#      dialect:
-#        marathon:
-#          healthChecks:
-#            - maxConsecutiveFailures: 0
-#          docker:
-#            force_pull_image: true
-#      scale:
-#        cpu: 1
-#        memory: 2GB
-#        instances: 1
-#  songs-mongo:
-#    services:
-#      name: songs-mongo
-#      deployable: mongo:latest
-#      ports:
-#        mongodb_port: 27017/tcp
+  songs:
+    services:
+      breed:
+        name: songs:1.0
+        deployable: magneticio/vamp-music-songs:1.0.0
+        ports:
+          http_port: 3004/http
+        dependencies:
+          db: songs-mongo
+        environment_variables:
+          MONGO_HOST: $db.host
+          MONGO_PORT: $db.ports.mongodb_port
+      scale:
+        cpu: .5
+        memory: 1GB
+        instances: 1
+  songs-mongo:
+    services:
+      name: songs-mongo
+      deployable: mongo:latest
+      ports:
+        mongodb_port: 27017/tcp
 
   analytics:
     services:
       breed:
         name: analytics:1.0
-        deployable: magneticio/vamp-music-analytics
+        deployable: magneticio/vamp-music-analytics:1.0.0
         ports:
           http_port: 3006/http
         dependencies:
@@ -162,9 +159,37 @@ clusters:
     services:
       breed:
         name: recommended:1.0
-        deployable: magneticio/vamp-music-recommended
+        deployable: magneticio/vamp-music-recommended:1.0.0
         ports:
           http_port: 3005/http
+        dependencies:
+          songs: songs:1.0
+        environment_variables:
+          SERVICES_SONGS_HOST: $songs.host
+          SERVICES_SONGS_PORT: $songs.ports.http_port
+      scale:
+        cpu: 0.2
+        memory: 256MB
+        instances: 1
+
+  activity:
+    services:
+      breed:
+        name: activity:1.0
+        deployable: magneticio/vamp-music-activity:1.0.0
+        ports:
+          http_port: 3007/http
+        dependencies:
+          songs: songs:1.0
+          analytics: analytics:1.0
+          profile: profile:1.0
+        environment_variables:
+          SERVICES_SONGS_HOST: $songs.host
+          SERVICES_SONGS_PORT: $songs.ports.http_port
+          SERVICES_ANALYTICS_HOST: $analytics.host
+          SERVICES_ANALYTICS_PORT: $analytics.ports.http_port
+          SERVICES_PROFILE_HOST: $profile.host
+          SERVICES_PROFILE_PORT: $profile.ports.http_port
       scale:
         cpu: 0.2
         memory: 256MB

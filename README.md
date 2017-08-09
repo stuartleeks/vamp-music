@@ -33,7 +33,8 @@ Vamp Music is a simplified but representative example of a service based archite
                          ----------> Auth
                          |
 Web-client (SPA) --> API Gateway --> Profile
-                                 --> Recommended --> Songs*
-                                 --> Charts
-                                 --> Songs*                                                             
+                                 --> Recommended --> Songs*                                 
+                                 --> Songs
+                                 --> Activity --> Songs*, Profile*, Analytics* 
+                                 --> Analytics                                                             
 ```
