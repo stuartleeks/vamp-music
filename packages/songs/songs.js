@@ -73,12 +73,10 @@ mongoose.connection.on('connected', () => {
   console.info(`Mongoose default connection open to ${config.db.mongoHost}`)
   Song.find({}).exec((err, collection) => {
     if (collection.length === 0) {
-      unzipSongData(() => {
-        const mockData = readSongData()
-        Song.insertMany(mockData, (err) =>{
-          if (err) console.error(err)
-          console.info('Song insertion complete')
-        })
+      const mockData = fs.readFileSync('./data/songs.json')
+      Song.insertMany(JSON.parse(mockData), (err) =>{
+        if (err) console.error(err)
+        console.info('Song insertion complete')
       })
     }
   })
@@ -93,33 +91,8 @@ const Song = mongoose.model('Song', {
   artist: String,
   title: String,
   track_id: { type: String, index: true },
-  timestamp: Date,
-  similars: [[mongoose.Schema.Types.Mixed]],
   tags: [[String]]
 })
-
-function unzipSongData (cb) {
-  if(!fs.existsSync('./data/lastfm_subset/A')) {
-    console.log('unzipping song data')
-    fs.createReadStream('./data/lastfm_subset.zip')
-      .pipe(unzip.Extract({ path: './data' }))
-      .on('close', cb)
-  } else {
-    console.log('song data already unzipped')
-    cb()
-  }
-}
-
-function readSongData () {
-  const files = glob.sync('./data/lastfm_subset/**/*.json')
-  const songs = []
-  for(file of files) {
-    const song = JSON.parse(fs.readFileSync(file))
-    songs.push(song)
-  }
-  console.log(`read ${songs.length} songs`)
-  return songs
-}
 
 exports.register = function (server, options, next) {
   server.route(routes)

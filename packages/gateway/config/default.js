@@ -37,6 +37,12 @@ services.analytics = {
   port: process.env.SERVICES_ANALYTICS_PORT || 3006
 }
 
+services.activity = {
+  host: process.env.SERVICES_ACTIVITY_HOST || '127.0.0.1',
+  port: process.env.SERVICES_ACTIVITY_PORT || 3007
+}
+
+
 
 
 module.exports = config

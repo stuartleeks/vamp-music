@@ -11,7 +11,8 @@
     <div class="row">
       <div class="col-sm-12 text-left">
         <h3 class="header">Browsing {{header}}</h3>
-        <table class="text-left table table-striped">
+        <spinner v-if="songs.length === 0"></spinner>
+        <table class="text-left table table-striped" v-else>
           <thead>
           <tr>
             <th width="50px"></th>
@@ -22,7 +23,7 @@
           </thead>
           <tbody>
           <tr v-for="(song, index) in songs" :key="song.track_id">
-            <td>
+            <td class="data-button">
               <span class="icon play-button" @click="togglePlay(song.track_id)" :class="song.playing ? 'icon-music-pause-button' : 'icon-music-play-button'"></span>
             </td>
             <td>
@@ -50,8 +51,12 @@
 </template>
 
 <script>
+  import Spinner from './Spinner'
   export default {
     name: 'browse',
+    components: {
+      spinner: Spinner
+    },
     data () {
       return {
         error: ''
@@ -85,3 +90,14 @@
     }
   }
 </script>
+<style scoped="">
+  .data-button {
+    padding-top: .6em;
+    padding-bottom: .1em;
+  }
+
+  .play-button {
+    font-size: 1.5em;
+  }
+
+</style>

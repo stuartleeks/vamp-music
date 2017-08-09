@@ -30,7 +30,6 @@
         this.$router.push('/login')
       },
       logout () {
-        this.$store.dispatch('storeEvent', { event: 'logout', payload: {} })
         localStorage.removeItem('vamp_music_token')
         localStorage.removeItem('vamp_music_profile')
         this.$router.push('/')
@@ -40,7 +39,7 @@
     },
     computed: {
       profile () {
-        return JSON.parse(localStorage.getItem('vamp_music_profile'))
+        return this.$store.getters.profile
       },
       userName () {
         return this.profile.first_name + ' ' + this.profile.last_name
