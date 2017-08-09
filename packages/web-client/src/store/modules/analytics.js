@@ -10,7 +10,7 @@ const actions = {
   storeEvent ({ commit }, event) {
     http.post('/analytics', event)
       .then(() => {})
-      .catch(err => console.error(err))
+      .catch(err => console.debug(err))
   }
 }
 

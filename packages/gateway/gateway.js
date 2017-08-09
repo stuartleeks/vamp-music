@@ -1,5 +1,4 @@
 const config = require('config')
-const fs = require('fs')
 const axios = require('axios')
 
 const auth = config.services.auth
@@ -7,6 +6,7 @@ const profile = config.services.profile
 const analytics = config.services.analytics
 const songs = config.services.songs
 const recommended = config.services.recommended
+const activity = config.services.activity
 
 
 const routes = [
@@ -52,7 +52,14 @@ const routes = [
     config: {
       handler: postEvents
     }
-  }
+  },
+  {
+    method: 'GET',
+    path: '/activity',
+    config: {
+      handler: getActivity
+    }
+  },
 ]
 
 function authenticate (request, reply) {
@@ -121,6 +128,17 @@ function postEvents (request, reply) {
   axios.post(`http://${analytics.host}:${analytics.port}/events`, event)
     .then(res => {
       reply().code(201)
+    })
+    .catch(err => {
+      reply(err)
+    })
+}
+
+
+function getActivity (request, reply) {
+  axios.get(`http://${activity.host}:${activity.port}/${request.currentUser}`)
+    .then(res => {
+      reply(res.data)
     })
     .catch(err => {
       reply(err)

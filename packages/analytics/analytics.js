@@ -1,8 +1,13 @@
 const mongoose = require('mongoose')
 const config = require('config')
-const fs = require('fs')
-const axios = require('axios')
 const routes = [
+  {
+    method: 'GET',
+    path: '/events',
+    config: {
+      handler: getEvents
+    }
+  },
   {
     method: 'POST',
     path: '/events',
@@ -11,6 +16,19 @@ const routes = [
     }
   }
 ]
+
+function getEvents (request, reply) {
+  const skip = parseInt(request.query.skip) || 0
+  const limit = parseInt(request.query.limit) || 10
+
+  Analytics.find().limit(limit).skip(skip).sort('-timestamp').lean()
+    .then(res => {
+      reply(res)
+    })
+    .catch(err => {
+      return reply(err)
+    })
+}
 
 function storeEvent (request, reply) {
   Analytics.create(request.payload)

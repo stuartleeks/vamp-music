@@ -1,0 +1,21 @@
+{
+  "name": "vamp-music-activity",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "node index.js",
+    "docker:build": "docker build -t magneticio/vamp-music-activity .",
+    "docker:run": "docker run -d -P --name vamp-music-activity magneticio/vamp-music-activity",
+    "docker:stop": "docker stop vamp-music-activity",
+    "docker:push": "docker push magneticio/vamp-music-activity"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "config": "^1.26.1",
+    "good": "^7.2.0",
+    "good-console": "^6.4.0",
+    "hapi": "^16.5.0"
+  }
+}
