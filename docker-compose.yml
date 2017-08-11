@@ -6,7 +6,7 @@ services:
 #
 
   web-client:
-    image: magneticio/vamp-music-web-client
+    image: magneticio/vamp-music-web-client:1.0.0
     depends_on:
     - gateway
     ports:
@@ -16,7 +16,7 @@ services:
 # Gateway
 #
   gateway:
-    image: magneticio/vamp-music-gateway
+    image: magneticio/vamp-music-gateway:1.0.0
     depends_on:
     - auth
     ports:
@@ -33,7 +33,7 @@ services:
 # Auth
 #
   auth:
-    image: magneticio/vamp-music-auth
+    image: magneticio/vamp-music-auth:1.0.0
     ports:
     - "3001"
     links:
@@ -51,7 +51,7 @@ services:
 # Profile
 #
   profile:
-    image: magneticio/vamp-music-profile
+    image: magneticio/vamp-music-profile:1.0.0
     ports:
     - "3002"
     links:
@@ -65,7 +65,7 @@ services:
 # Songs
 #
   songs:
-    image: magneticio/vamp-music-songs
+    image: magneticio/vamp-music-songs:1.0.0
     ports:
     - "3004"
     links:
@@ -79,7 +79,7 @@ services:
 # Recommended
 #
   recommended:
-    image: magneticio/vamp-music-recommended
+    image: magneticio/vamp-music-recommended:1.0.0
     ports:
     - "3005"
     depends_on:
@@ -90,7 +90,7 @@ services:
 # Analytics
 #
   analytics:
-    image: magneticio/vamp-music-analytics
+    image: magneticio/vamp-music-analytics:1.0.0
     ports:
     - "3006"
     links:
@@ -104,7 +104,7 @@ services:
 # Activity
 #
   activity:
-    image: magneticio/vamp-music-activity
+    image: magneticio/vamp-music-activity:1.0.0
     ports:
     - "3007"
     environment:

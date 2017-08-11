@@ -4,10 +4,10 @@
   "description": "",
   "scripts": {
     "start": "node index.js",
-    "docker:build": "docker build -t magneticio/vamp-music-songs .",
-    "docker:run": "docker run -d -P --name vamp-music-songs magneticio/vamp-music-songs",
-    "docker:stop": "docker stop vamp-music-songs",
-    "docker:push": "docker push magneticio/vamp-music-songs"
+    "docker:build": "docker build -t magneticio/$npm_package_name:$npm_package_version .",
+    "docker:run": "docker run -d -P --name $npm_package_name magneticio/$npm_package_name:$npm_package_version",
+    "docker:stop": "docker stop $npm_package_name",
+    "docker:push": "docker push magneticio/$npm_package_name:$npm_package_version"
   },
   "author": "",
   "license": "ISC",

@@ -3,13 +3,12 @@
   "version": "1.0.0",
   "description": "A Vue.js project",
   "author": "Tim Nolet <tim@unumotors.com>",
-  "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
     "lint": "eslint --ext .js,.vue src",
-    "docker:build": "npm run build && docker build -t magneticio/vamp-music-web-client .",
-    "docker:push": "docker push magneticio/vamp-music-web-client"
+    "docker:build": "npm run build && docker build -t magneticio/$npm_package_name:$npm_package_version .",
+    "docker:push": "docker push magneticio/$npm_package_name:$npm_package_version"
   },
   "dependencies": {
     "axios": "^0.16.2",
