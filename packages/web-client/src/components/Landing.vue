@@ -6,7 +6,7 @@
           <div class="col-sm-8">
             <div class="header-content">
               <div class="header-content-inner">
-                <h1><span style="background-color: black">Vamp Music is different then all other music services!</span></h1>
+                <h1><span style="background-color: black">Vamp Music is different than all other music services!</span></h1>
               </div>
             </div>
           </div>
